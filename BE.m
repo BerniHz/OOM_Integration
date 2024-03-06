@@ -1,20 +1,28 @@
-function [yBE,t] = BE(A, b, c, d, u, h, tend, x0)
+function [yBE,t] = BE(A, B, C, D, u, h, tend, x0)
 
 i = 1;
-x = zeros(size(0:h:tend));
-x(i) = x0;
+%Create empty Array that match the dimension for the possible state
+%variables
+x = zeros(length(A),length(0:h:tend));
+y = zeros(size(C,1),length(0:h:tend));
 
+%Inital value mapping
+startValue = zeros(1,length(A))';
+startValue(:) = x0;
+x(:,1) = startValue;
+y(:,1) = C*x(:,1) + D*u;
+
+%Implementaion for Matrix
 for t_act = 0:h:tend-h
-    %BE
-    x(i+1) = (1-A*h)^-1 * x(i)
+    
+    x(:,i+1) = inv(1-A*h) * (x(:,i) + B*u*h);
+    y(:,i+1) = C*x(:,i+1) + D*u;
 
     t_vec(i) = t_act;
     i = i + 1;
 end
 
 t = t_vec;
-yFE = x;
-
-
+yBE = y;
 
 end

@@ -17,11 +17,10 @@ tend = 20;
 t = 0:h:tend;
 u = 0;
 
+%FORWARD EULER
 yFE = FE(A,b,c,d,u,h,tend,x0);
 % Computing the analytical solution
 yAN = x0*exp(A*t);
-
-% yBE = BE(A,b,c,d,u,h,tend,x0);
 
 %Plotting FE vs Analytic Solution
 figure(1);
@@ -34,6 +33,21 @@ ylabel('amplitude');
 xlabel('time[s]');
 legend('Analytic','FE');
 grid on;
+
+%BACKWARD EULER
+hBE = 0.3;
+tBE = 0:hBE:tend;
+yBE = BE(A,b,c,d,u,hBE,tend,x0); 
+
+figure(2)
+plot(t,yAN,"red");
+hold on;
+plot(tBE,yBE,"blue");
+hold off;
+title('Example1: BE Integration'); grid on;
+ylabel('amplitude'); xlabel('time[s]'); legend('Analytic','BE');
+
+
 
 %% 3.3 Mechatronic System
 
@@ -99,7 +113,7 @@ u = [Vdc; Fg];
 yFE3 = FE(A,b,c,d,u,h,tend,x0);
 
 %Plotting
-figure(2);
+figure(3);
 plot(t,yFE3,"blue");
 title('Example3: FE Integration');
 ylabel('amplitude');
