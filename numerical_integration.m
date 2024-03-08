@@ -116,7 +116,7 @@ yFE3 = FE(A,b,c,d,u,h,tend,x0);
 
 %Plotting
 figure(3);
-plot(t,yFE3(1,:),"blue");
+plot(t,yFE3(2,:),"blue");
 title('Example3: FE Integration');
 ylabel('amplitude');
 xlabel('time[s]');
@@ -131,7 +131,7 @@ tBE = 0:hBE:tend;
 yBE = BE(A,b,c,d,u,hBE,tend,x0); 
 
 figure(4)
-plot(tBE,yBE(1,:),"blue");
+plot(tBE,yBE(2,:),"blue");
 title('Example3: BE Integration'); grid on;
 ylabel('amplitude'); xlabel('time[s]'); legend('BE');
 
