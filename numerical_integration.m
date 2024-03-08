@@ -52,8 +52,8 @@ ylabel('amplitude'); xlabel('time[s]'); legend('Analytic','BE');
 %% 3.3 Mechatronic System
 
 x0 = 1;
-h = 1e-6;       %steps size <= 0.1 achieves good results for FE
-tend = 0.5;
+h = 1e-6;
+tend = 5;
 t = 0:h:tend;
 
 % Inputs
@@ -109,16 +109,30 @@ c = [0 0 r 0 0;
 d = zeros(2,2);
 u = [Vdc; Fg];
 
+sys_mech = ss(A,b,c,d);
+
 %FE Integration
 yFE3 = FE(A,b,c,d,u,h,tend,x0);
 
 %Plotting
 figure(3);
-plot(t,yFE3,"blue");
+plot(t,yFE3(1,:),"blue");
 title('Example3: FE Integration');
 ylabel('amplitude');
 xlabel('time[s]');
 legend('FE');
 grid on;
+
+% lsim(sys_mech, [Vdc,Fg], t);
+
+%BACKWARD EULER
+hBE = 1e-6;
+tBE = 0:hBE:tend;
+yBE = BE(A,b,c,d,u,hBE,tend,x0); 
+
+figure(4)
+plot(tBE,yBE(1,:),"blue");
+title('Example3: BE Integration'); grid on;
+ylabel('amplitude'); xlabel('time[s]'); legend('BE');
 
 
