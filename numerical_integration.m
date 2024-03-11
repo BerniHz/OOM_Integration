@@ -134,5 +134,3 @@ figure(4)
 plot(tBE,yBE(2,:),"blue");
 title('Example3: BE Integration'); grid on;
 ylabel('amplitude'); xlabel('time[s]'); legend('BE');
-
-
