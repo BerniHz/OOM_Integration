@@ -8,7 +8,7 @@
 *.mlapp binary
 *.mldatx binary
 *.mlproj binary
-*.mlx binary
+*.mlx binary merge=mlAutoMerge
 *.p binary
 *.sfx binary
 *.sldd binary
