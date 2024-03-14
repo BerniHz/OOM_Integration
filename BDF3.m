@@ -18,10 +18,17 @@ for t = 0:h:tend-h
     if i < 3 % Use implicit BE Algo to calculate first 2 steps
         x(:,i+1) = (eye(size(A,1))-A*h) \ (x(:,i) + B*u*h);
     else
-        xip1 = (eye(size(A,1))-A*h) \ (x(:,i) + B*u*h);
-        fip1 = A*xip1 + B*u;  % Usage of BE with 1x interation to obtain fi+1
+        %Version Herz (Use Backward Euler to obtain 
+        %derivative future value fk+1 = fip1
+        % xip1 = (eye(size(A,1))-A*h) \ (x(:,i) + B*u*h);
+        % fip1 = A*xip1 + B*u;  % Usage of BE with 1x interation to obtain fi+1
+        % x(:,i+1) = (18/11)*x(:,i) - (9/11)*x(:,i-1) + (2/11)*x(:,i-2) + (6/11)*h*fip1;
 
-        x(:,i+1) = (18/11)*x(:,i) - (9/11)*x(:,i-1) + (2/11)*x(:,i-2) + (6/11)*h*fip1;
+        %Version Dünser
+        xk    = x(:,i);
+        xk_1  = x(:,i-1);
+        xk_2  = x(:,i-2);
+        x(:,i+1) = (eye(size(A,1))-(6/11)*A*h) \ ((18/11)*xk -(9/11)*xk_1 + (2/11)* xk_2 + (6/11) * h * B * u);
     end
 
     y(:,i+1) = C*x(:,i+1) + D*u;
